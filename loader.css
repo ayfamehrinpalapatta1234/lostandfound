@@ -1,0 +1,31 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:white;
+
+font-family:Arial;
+
+}
+
+
+.loader{
+
+text-align:center;
+margin: 80px;
+padding:80px 80px ;
+animation:appear 1.5s ease;
+
+}
+
+

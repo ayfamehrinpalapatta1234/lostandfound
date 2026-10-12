@@ -1,0 +1,70 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:#F8FAFC ;
+}
+form{
+    width: 400px;
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+     box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+.register-head{
+    align-items: center;
+    display:block;
+}
+.register-head h3{
+    font-size:32px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.register-head label{
+    font-weight: 600;
+    display: block;
+    margin-top:20px;
+    margin-bottom: 8px;
+}
+.register-head input{
+    width: 100%;
+    margin-bottom:20px;
+    padding: 12px;
+    border: 1px solid #0000;
+    border-radius: 12px;
+    font-size: 16px;
+    
+} 
+.register-tail{
+    font-weight: 600;
+    display:block;
+}
+.remember{
+    display: flex;
+    gap:10px;
+    margin-bottom:20px;
+    margin-top: 10px;
+}
+.register{
+    align-items:center;
+    margin-bottom: 15px;
+}  
+.register button{
+    width:100%;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 1px solid #0000;
+    border-radius: 12px;
+    font-size: 16px;
+    margin-top: 20px;
+    background-color: blue;
+    
+}
+

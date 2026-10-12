@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" 
+            content="width=device-width", initial-scale=1.0">
+        <title>
+            Lost & Found Management System
+        </title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    </head>
+
+    <body>
+        <!--Navbar Section-->
+        <header class="navbar">
+
+                <nav>
+                    <div class="logo">
+                        <img src="fina.png" alt="Traceback">
+                    </div>
+    
+
+                    <ul>
+           
+   
+                        <li><a href="#">Home</a></li>
+                        <li>
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text"
+                                id="search"
+                                placeholder="Search here">
+                            </div>
+                        </li>
+                        <li><a href="login.html">Login</a></li>
+
+                     </ul>
+                </nav>
+
+        </header>
+
+        <!--Hero section-->
+            <main>
+                <section class="hero">
+                        <div class="hero-content">
+                            <h1>Lost items shouldn't stay lost</h1>
+                            <h2>Find it back.</h2>
+                            <a href="register.html" class="btn">
+                            Get started
+                            </a>
+                        </div>
+
+                        <img src="iphone.png" class="floating mobile">
+                        <img src="wallet.png" class="floating wallet">
+                        <img src="backpack.png" class="floating backpack">
+                        <img src="book.png" class="floating book"> 
+                        <img src="calculator.png" class="floating calculator"> 
+                        <img src="document.png" class="floating document">  
+                     
+                </section>
+            </main>
+    
+    <!--Recently Found Items-->
+    <section class="recent-items">
+            <h2>Recently Found Items</h2>
+            <div class="slider">
+
+                <div class="cards-container">
+
+                    <!--card1-->
+
+                    <div class="item-card">
+                        
+                        <img src="laptop.png" class="product-image" alt="Laptop">
+                        <div class="card-content">
+                            <h3>MacBook Air</h3>
+                            <span>📍 IT Block</span>
+                            <span>📅 22 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <!--card2-->
+
+                    <div class="item-card">
+                        
+                        <img src="bottle.png" class="product-image" alt="Bottle">
+                        <div class="card-content">
+                            <h3>Water Bottle</h3>
+
+                            <span>📍 Library</span>
+
+                            <span>📅 21 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <!--card3-->
+
+                    <div class="item-card">
+                    
+                        <img src="bag.png" class="product-image" alt="Bag">
+                        <div class="card-content">
+                            <h3>Backpack</h3>
+
+                            <span>📍 Main Gate</span>
+
+                            <span>📅 20 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+                    <!--card4-->
+
+                    <div class="item-card">
+                       
+                        <img src="headphones.png" class="product-image" alt="Headphones">
+                        <div class="card-content">
+                            <h3>Headphones</h3>
+
+                            <span>📍 Auditorium</span>
+
+                            <span>📅 20 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <!--duplicate them-->
+
+                    
+                    <!--card1-->
+                    <div class="item-card">
+                        <img src="laptop.png" class="product-image" alt="Laptop">
+                        <div class="card-content">
+                            <h3>MacBook Air</h3>
+                            <span>📍 IT Block</span>
+                            <span>📅 22 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <!--card2-->
+
+                    <div class="item-card">
+                       
+                        <img src="bottle.png" class="product-image" alt="Bottle">
+                        <div class="card-content">
+                            <h3>Water Bottle</h3>
+
+                            <span>📍 Library</span>
+
+                            <span>📅 21 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <!--card3-->
+
+                    <div class="item-card">
+                        <img src="bag.png" class="product-image" alt="Bag">
+                        <div class="card-content">
+                            <h3>Backpack</h3>
+
+                            <span>📍 Main Gate</span>
+
+                            <span>📅 20 July 2026</span>
+                            <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+                    <!--card4-->
+
+                    <div class="item-card">
+                        <img src="headphones.png" class="product-image" alt="Headphones">
+                        <div class="card-content">
+                            <h3>Headphones</h3>
+
+                            <span>📍 Auditorium</span>
+
+                            <span>📅 20 July 2026</span>
+                             <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+    </section>
+
+    <!--How traceback works secition-->
+    <section class="how">
+            
+            <h2>How TraceBack Works?</h2>
+            <div class="workflow">
+
+                <div class="workflow-card">
+                    <span class="card_no">01</span>
+                    <div class="icon">📤</div>
+                    <h3>Report lost item</h3>
+                    <p> Users submit details about their lost belongings.</p>
+                </div>
+
+                  <div class="arrow">→</div>
+
+                 <div class="workflow-card">
+                    <span class="card_no">02</span>
+                    <div class="icon">📦</div>
+                    <h3>Report found item</h3>
+                    <p>Found items are added to the system database.</p>
+                </div>
+
+                  <div class="arrow">→</div>
+
+                <div class="workflow-card">
+                    <span class="card_no">03</span>
+                    <div class="icon">🔍</div>
+                    <h3>Search & Match</h3>
+                    <p>The system finds matching lost and found items.</p>
+                </div>
+
+                  <div class="arrow">→</div>
+
+                <div class="workflow-card">
+                    <span class="card_no">04</span>
+                    <div class="icon">🙋</div>
+                    <h3>Claim Item</h3>
+                    <p>Owners submit a request to claim their item.</p>
+                </div>
+
+                  <div class="arrow">→</div>
+
+                <div class="workflow-card">
+                    <span class="card_no">05</span>
+                    <div class="icon">✅</div>
+                    <h3>Verification</h3>
+                    <p> Admin verifies ownership and returns the item.</p>
+                </div>
+            </div>
+
+    </section>
+
+    <!--footer-->
+
+    <section class="footer">
+            <div class="footer-head">
+            <h2>TraceBack</h2>
+            <p>Trace. Find. Reconnect.</p>
+            </div>
+            <div class="footer-tail">
+                <div class="quicklinks">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Search</a></li>
+                        <li><a href="#">Report Lost</a></li>
+                        <li><a href="#">Report Found</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+
+    </section>
+            
+
+</header>
+</body>
+</html>

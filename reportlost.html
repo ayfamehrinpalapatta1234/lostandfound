@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" 
+            content="width=device-width", initial-scale=1.0">
+        <title>
+            TraceBack.Dashboard
+        </title>
+        <link rel="stylesheet" href="dashboard.css">
+    </head>
+    <body>
+        <div class="form-card">
+                        <h1>Report Lost Item</h1>
+                        <p>Fill in the details below to help others identify your lost item</p>
+
+                        <form>
+                            <!--image upload-->
+                            <div class="input-group">
+                                <label>Upload Item Image</label>
+                                <div class="upload-box">
+                                    <input type="file" id="imageUpload" hidden>
+                                    <label for="imageUpload" class="upload-label">
+                                        <div class="upload-icon">📷</div>
+                                        <h3>drag and drop image</h3>
+                                        <p>or click to browse</p>
+                                    </label>
+                                </div>
+                                <img id="previewImage">
+                            </div>
+                            <!--item name-->
+                            <div class="input-group">
+                                <label>Item Name</label>
+                                <input type="text" placeholder="eg:MacBook Air">
+                            </div>
+                            <!--category-->
+                            <div class="input-group">
+                                <label>Category</label>
+                                <select>
+                                    <option>select category</option>
+                                    <option>Electronics</option>
+                                    <option>Books</option>
+
+                                    <option>Bag</option>
+
+                                    <option>Keys</option>
+
+                                    <option>ID Card</option>
+
+                                    <option>Wallet</option>
+
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <!--description-->
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea placeholder="Describe your item..."></textarea>
+                            </div>
+                            <!--location-->
+                            <div class="input-group">
+                                <label>Last Seen Location</label>
+                                <input type="text" placeholder="eg:Library">
+                            </div>
+                            <!--Date-->
+                            <div class="input-group">
+                                <label>Date Lost</label>
+                                <input type="date">
+                            </div>
+                            <!--Contact-->
+                            <div class="input-group">
+                                <label>Contact number</label>
+                                <input type="tel">
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                Submit report
+                            </button>
+                        </form>
+                    </div>
+    </body>
+    </html>
