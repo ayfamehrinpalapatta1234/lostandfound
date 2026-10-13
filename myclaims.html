@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - My Claims & Verification</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .claim-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .claim-card-left {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            min-width: 280px;
+        }
+        .claim-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 6px;
+            border: 1px solid #cbd5e1;
+        }
+        .admin-verification-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px dashed #cbd5e1;
+        }
+        .status-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li class="active"><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card-full">
+                <div class="page-header">
+                    <div>
+                        <h1>Item Claims & Status</h1>
+                        <p>Track the verification status of claims you've submitted</p>
+                    </div>
+                    <a href="search.html?type=found" class="btn-primary" style="text-decoration:none;">Browse Found Items</a>
+                </div>
+
+                <!-- My Claims List -->
+                <div id="myClaimsList">
+                    <div style="text-align:center; padding:30px; color:#64748b;">Loading claims...</div>
+                </div>
+
+                <div class="empty-state" id="emptyClaims" style="display:none;">
+                    <div class="empty-state-icon">🙋</div>
+                    <h3>No claims filed yet</h3>
+                    <p>When you see a found item that matches your lost property, you can file a claim to retrieve it.</p>
+                    <a href="search.html?type=found" class="btn-primary" style="display:inline-block; max-width:200px; margin:0 auto; text-decoration:none;">Search Found Items</a>
+                </div>
+
+                <!-- Administrator / Staff Claim Verification Workflow -->
+                <div class="admin-verification-section" id="adminVerificationSection" style="display:none;">
+                    <div class="page-header" style="margin-bottom:15px;">
+                        <div>
+                            <h2 style="color:#0b1b45; font-size:22px;">🛡️ Campus Verification Management</h2>
+                            <p style="color:#64748b; font-size:14px;">Review claims filed by students, verify evidence, and approve returns</p>
+                        </div>
+                    </div>
+                    <div id="adminClaimsList">
+                        <!-- Populated for Admin/Staff -->
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="content-footer">
+                    <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to view claims.')) {
+                return;
+            }
+
+            const user = TraceBackAPI.getCurrentUser();
+            const myClaimsList = document.getElementById('myClaimsList');
+            const emptyClaims = document.getElementById('emptyClaims');
+            const adminSection = document.getElementById('adminVerificationSection');
+            const adminList = document.getElementById('adminClaimsList');
+
+            async function loadClaims() {
+                try {
+                    const res = await TraceBackAPI.getMyClaims();
+                    const claims = res.claims || [];
+
+                    if (claims.length === 0) {
+                        myClaimsList.innerHTML = '';
+                        emptyClaims.style.display = 'block';
+                    } else {
+                        emptyClaims.style.display = 'none';
+                        myClaimsList.innerHTML = claims.map(c => {
+                            const badgeClass = c.status === 'Approved' ? 'badge-approved' :
+                                               c.status === 'Rejected' ? 'badge-rejected' :
+                                               c.status === 'Under Review' ? 'badge-review' : 'badge-pending';
+                            return `
+                                <div class="claim-card">
+                                    <div class="claim-card-left">
+                                        <img src="${c.image_url || 'bottle.png'}" class="claim-item-img" alt="${escapeHtml(c.item_name)}" onerror="this.src='fina.png'">
+                                        <div>
+                                            <h3 style="color:#0b1b45; font-size:18px; margin-bottom:5px;">${escapeHtml(c.item_name)}</h3>
+                                            <p style="color:#64748b; font-size:13px; margin:0 0 8px;">Claim Filed: ${c.claim_date} • <strong>ID:</strong> ${c.claims_id}</p>
+                                            <p style="color:#334155; font-size:14px; margin:0 0 6px;"><strong>Explanation:</strong> ${escapeHtml(c.explanation)}</p>
+                                            ${c.proof_of_ownership ? `
+                                                <p style="color:#475569; font-size:13px; margin:0 0 6px; background:#f1f5f9; padding:6px 10px; border-radius:6px;">
+                                                    🔒 <strong>Proof Evidence:</strong> ${escapeHtml(c.proof_of_ownership)}
+                                                </p>
+                                            ` : ''}
+                                            ${c.review_message ? `
+                                                <div style="background:#eff6ff; color:#1e40af; border:1px solid #bfdbfe; padding:8px 12px; border-radius:8px; font-size:13px; margin-top:8px;">
+                                                    💬 <strong>Security Feedback:</strong> ${escapeHtml(c.review_message)}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <span class="badge ${badgeClass}">${c.status}</span>
+                                        <div style="margin-top:15px;">
+                                            <a href="details.html?type=found&id=${c.foreign_id}" class="btn-secondary" style="font-size:13px; padding:8px 14px;">View Item</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+
+                    // If user is Admin or Staff, load claims management
+                    if (user && (user.role === 'Admin' || user.role === 'Staff')) {
+                        adminSection.style.display = 'block';
+                        const adminRes = await TraceBackAPI.getManageClaims();
+                        const allClaims = adminRes.claims || [];
+
+                        if (allClaims.length === 0) {
+                            adminList.innerHTML = '<div style="color:#64748b; padding:15px;">No active claims requiring administrator verification.</div>';
+                        } else {
+                            adminList.innerHTML = allClaims.map(c => `
+                                <div class="claim-card" style="background:#fafcff; border-left:4px solid #1d4ed8;">
+                                    <div style="flex:1;">
+                                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                                            <h4 style="color:#0b1b45; font-size:16px;">Item: "${escapeHtml(c.item_name)}"</h4>
+                                            <span class="badge badge-${c.status.toLowerCase().replace(' ', '-')}">${c.status}</span>
+                                        </div>
+                                        <p style="font-size:13px; color:#475569; margin:4px 0 10px;">
+                                            <strong>Claimant:</strong> ${escapeHtml(c.claimant_name || 'Student')} (${escapeHtml(c.claimant_email)}) • <strong>Phone:</strong> ${escapeHtml(c.claimant_phone || 'N/A')}
+                                        </p>
+                                        <p style="font-size:14px; color:#334155; margin-bottom:6px;">
+                                            <strong>Reason:</strong> ${escapeHtml(c.explanation)}
+                                        </p>
+                                        <p style="font-size:13px; color:#475569; background:#fff; padding:8px; border-radius:6px; border:1px solid #e2e8f0;">
+                                            🔒 <strong>Submitted Proof:</strong> ${escapeHtml(c.proof_of_ownership || 'None')}
+                                        </p>
+                                        
+                                        <div class="status-actions">
+                                            <button onclick="handleStatusChange('${c.claims_id}', 'Approved')" class="btn-primary" style="background:#16a34a; font-size:12px; padding:6px 14px;">✓ Approve Return</button>
+                                            <button onclick="handleStatusChange('${c.claims_id}', 'Under Review')" class="btn-secondary" style="font-size:12px; padding:6px 14px;">⏳ Mark Under Review</button>
+                                            <button onclick="handleStatusChange('${c.claims_id}', 'Rejected')" class="btn-danger" style="font-size:12px; padding:6px 14px;">✕ Reject Claim</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('');
+                        }
+                    }
+
+                } catch (e) {
+                    console.error('Error loading claims:', e);
+                }
+            }
+
+            window.handleStatusChange = async function(claimId, newStatus) {
+                const note = prompt(`Enter optional review note for student (Status: ${newStatus}):`, `Campus Security verified: ${newStatus}`);
+                if (note !== null) {
+                    try {
+                        const res = await TraceBackAPI.updateClaimStatus(claimId, newStatus, note);
+                        if (res.success) {
+                            showToast(`Claim updated to ${newStatus}`, 'success');
+                            loadClaims();
+                        } else {
+                            throw new Error(res.error || 'Failed to update claim');
+                        }
+                    } catch (err) {
+                        showToast(err.message, 'error');
+                    }
+                }
+            };
+
+            loadClaims();
+        });
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

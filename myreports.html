@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - My Reports</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li class="active"><a href="myreports.html">📋 My Reports</a></li>
+                <li><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card-full">
+                <div class="page-header">
+                    <div>
+                        <h1>My Reports</h1>
+                        <p>Track and manage your submitted lost and found item notices</p>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <a href="reportlost.html" class="btn-primary" style="background:#ef4444; text-decoration:none;">+ Report Lost</a>
+                        <a href="reportfound.html" class="btn-primary" style="background:#10b981; text-decoration:none;">+ Report Found</a>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-nav">
+                    <button class="tab-btn active" id="tabLostBtn">Lost Items (<span id="lostTabCount">0</span>)</button>
+                    <button class="tab-btn" id="tabFoundBtn">Found Items (<span id="foundTabCount">0</span>)</button>
+                </div>
+
+                <!-- Lost Items Grid -->
+                <div id="lostReportsSection">
+                    <div class="items-grid" id="lostGrid"></div>
+                    <div class="empty-state" id="emptyLost" style="display:none;">
+                        <div class="empty-state-icon">📋</div>
+                        <h3>No lost item reports yet</h3>
+                        <p>If you've misplaced anything around campus, submit a report to alert finders.</p>
+                        <a href="reportlost.html" class="btn-primary" style="display:inline-block; max-width:200px; margin:0 auto; text-decoration:none;">Report Lost Item</a>
+                    </div>
+                </div>
+
+                <!-- Found Items Grid -->
+                <div id="foundReportsSection" style="display:none;">
+                    <div class="items-grid" id="foundGrid"></div>
+                    <div class="empty-state" id="emptyFound" style="display:none;">
+                        <div class="empty-state-icon">📦</div>
+                        <h3>No found item reports yet</h3>
+                        <p>Report items you've recovered to help return them safely to their rightful owners.</p>
+                        <a href="reportfound.html" class="btn-primary" style="display:inline-block; max-width:200px; margin:0 auto; text-decoration:none;">Report Found Item</a>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="content-footer">
+                    <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to view your reports.')) {
+                return;
+            }
+
+            const tabLostBtn = document.getElementById('tabLostBtn');
+            const tabFoundBtn = document.getElementById('tabFoundBtn');
+            const lostSection = document.getElementById('lostReportsSection');
+            const foundSection = document.getElementById('foundReportsSection');
+            const lostGrid = document.getElementById('lostGrid');
+            const foundGrid = document.getElementById('foundGrid');
+            const emptyLost = document.getElementById('emptyLost');
+            const emptyFound = document.getElementById('emptyFound');
+
+            // Handle tab switching
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('tab') === 'found') {
+                showFoundTab();
+            }
+
+            tabLostBtn.addEventListener('click', showLostTab);
+            tabFoundBtn.addEventListener('click', showFoundTab);
+
+            function showLostTab() {
+                tabLostBtn.classList.add('active');
+                tabFoundBtn.classList.remove('active');
+                lostSection.style.display = 'block';
+                foundSection.style.display = 'none';
+            }
+
+            function showFoundTab() {
+                tabFoundBtn.classList.add('active');
+                tabLostBtn.classList.remove('active');
+                foundSection.style.display = 'block';
+                lostSection.style.display = 'none';
+            }
+
+            async function loadReports() {
+                try {
+                    const res = await TraceBackAPI.getMyReports();
+                    const lost = res.lost_reports || [];
+                    const found = res.found_reports || [];
+
+                    document.getElementById('lostTabCount').textContent = lost.length;
+                    document.getElementById('foundTabCount').textContent = found.length;
+
+                    // Render Lost Items
+                    if (lost.length === 0) {
+                        lostGrid.innerHTML = '';
+                        emptyLost.style.display = 'block';
+                    } else {
+                        emptyLost.style.display = 'none';
+                        lostGrid.innerHTML = lost.map(item => `
+                            <div class="item-box">
+                                <div class="item-box-img-wrap">
+                                    <img src="${item.image_url || 'laptop.png'}" alt="${escapeHtml(item.item_name)}" onerror="this.src='fina.png'">
+                                    <div class="item-box-badge">
+                                        <span class="badge badge-lost">${item.status}</span>
+                                    </div>
+                                </div>
+                                <div class="item-box-body">
+                                    <h3 class="item-box-title">${escapeHtml(item.item_name)}</h3>
+                                    <p class="item-box-desc">${escapeHtml(item.description)}</p>
+                                    <div class="item-box-meta">
+                                        <span>📍 <strong>Lost at:</strong> ${escapeHtml(item.location_lost)}</span>
+                                        <span>📅 <strong>Date:</strong> ${escapeHtml(item.date_lost)}</span>
+                                        <span>🆔 <strong>Report ID:</strong> ${item.lost_id}</span>
+                                    </div>
+                                    <div class="item-box-actions">
+                                        <a href="details.html?type=lost&id=${item.lost_id}" class="btn-primary">View Details</a>
+                                        <button onclick="handleDelete('lost', '${item.lost_id}')" class="btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Render Found Items
+                    if (found.length === 0) {
+                        foundGrid.innerHTML = '';
+                        emptyFound.style.display = 'block';
+                    } else {
+                        emptyFound.style.display = 'none';
+                        foundGrid.innerHTML = found.map(item => `
+                            <div class="item-box">
+                                <div class="item-box-img-wrap">
+                                    <img src="${item.image_url || 'bottle.png'}" alt="${escapeHtml(item.item_name)}" onerror="this.src='fina.png'">
+                                    <div class="item-box-badge">
+                                        <span class="badge badge-found">${item.status}</span>
+                                    </div>
+                                </div>
+                                <div class="item-box-body">
+                                    <h3 class="item-box-title">${escapeHtml(item.item_name)}</h3>
+                                    <p class="item-box-desc">${escapeHtml(item.description)}</p>
+                                    <div class="item-box-meta">
+                                        <span>📍 <strong>Found at:</strong> ${escapeHtml(item.location_found)}</span>
+                                        <span>🏢 <strong>Storage:</strong> ${escapeHtml(item.storage_location || 'Security')}</span>
+                                        <span>📅 <strong>Date:</strong> ${escapeHtml(item.date_found)}</span>
+                                    </div>
+                                    <div class="item-box-actions">
+                                        <a href="details.html?type=found&id=${item.found_id}" class="btn-primary">View Details</a>
+                                        <button onclick="handleDelete('found', '${item.found_id}')" class="btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                } catch (e) {
+                    console.error('Error loading my reports:', e);
+                }
+            }
+
+            window.handleDelete = async function(type, id) {
+                if (confirm('Are you sure you want to permanently delete this report?')) {
+                    try {
+                        const res = await TraceBackAPI.deleteReport(type, id);
+                        if (res.success) {
+                            showToast('Report deleted successfully', 'success');
+                            loadReports();
+                        } else {
+                            throw new Error(res.error || 'Delete failed');
+                        }
+                    } catch (e) {
+                        showToast(e.message, 'error');
+                    }
+                }
+            };
+
+            loadReports();
+        });
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

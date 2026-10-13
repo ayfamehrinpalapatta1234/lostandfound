@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Submit Item Claim</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .claim-summary-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .claim-summary-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: white;
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li class="active"><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-card">
+                <h1>Submit Ownership Claim</h1>
+                <p>Provide verifiable details proving that this found belonging is yours.</p>
+
+                <!-- Item Summary Display -->
+                <div class="claim-summary-card" id="itemSummaryCard">
+                    <img id="summaryImg" class="claim-summary-img" src="fina.png" alt="Item Preview">
+                    <div>
+                        <h3 id="summaryTitle" style="color:#0b1b45; font-size:18px;">Loading Item...</h3>
+                        <p id="summaryLocation" style="color:#64748b; font-size:14px; margin:4px 0 0;">📍 Location</p>
+                    </div>
+                </div>
+
+                <form id="claimForm">
+                    <div class="input-group">
+                        <label for="explanation">Why does this item belong to you? *</label>
+                        <textarea id="explanation" required placeholder="Explain when and where you lost it, brand/color details, or any circumstances that establish your ownership..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="proofOfOwnership">Proof of Ownership / Non-Sensitive Identifying Marks *</label>
+                        <textarea id="proofOfOwnership" required placeholder="Specify unique characteristics not listed publicly (e.g. wallpaper description, engraved initials, sticker placement, inside pocket contents, serial code prefix)..."></textarea>
+                    </div>
+
+                    <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:15px; margin-bottom:25px; color:#1e40af; font-size:13px; line-height:1.5;">
+                        ℹ️ <strong>Security Verification Notice:</strong> Claims are reviewed manually by Campus Security. Submitting matching keywords does not guarantee approval. You may be requested to present your College ID card upon retrieval.
+                    </div>
+
+                    <div style="display:flex; gap:15px;">
+                        <button type="submit" class="submit-btn" id="submitClaimBtn">Submit Claim Request</button>
+                        <a href="search.html" class="btn-secondary" style="padding:16px 25px; border-radius:15px; display:inline-flex; align-items:center;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <footer class="content-footer">
+                <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to claim an item.')) {
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const foundId = urlParams.get('found_id');
+
+            if (!foundId) {
+                alert('No found item specified to claim.');
+                window.location.href = 'search.html';
+                return;
+            }
+
+            // Load item details
+            try {
+                const res = await TraceBackAPI.getItemDetails('found', foundId);
+                if (res && res.item) {
+                    const item = res.item;
+                    document.getElementById('summaryTitle').textContent = item.item_name;
+                    document.getElementById('summaryLocation').textContent = `📍 Found at: ${item.location_found} on ${item.date_found}`;
+                    const img = document.getElementById('summaryImg');
+                    img.src = item.image_url || 'bottle.png';
+                    img.onerror = () => { img.src = 'fina.png'; };
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            const form = document.getElementById('claimForm');
+            const submitBtn = document.getElementById('submitClaimBtn');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting claim...';
+
+                const explanation = document.getElementById('explanation').value.trim();
+                const proofOfOwnership = document.getElementById('proofOfOwnership').value.trim();
+
+                try {
+                    const res = await TraceBackAPI.submitClaim({
+                        found_id: foundId,
+                        explanation,
+                        proof_of_ownership: proofOfOwnership
+                    });
+
+                    if (res.success) {
+                        showToast('Claim submitted successfully! Campus Security has been notified.', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'myclaims.html';
+                        }, 1200);
+                    } else {
+                        throw new Error(res.error || 'Failed to submit claim');
+                    }
+                } catch (err) {
+                    showToast(err.message, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Claim Request';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

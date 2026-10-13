@@ -1,40 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-            content="width=device-width", initial-scale=1.0">
-    <title>TraceBack.Register</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Register</title>
     <link rel="stylesheet" href="register.css">
-    <body>
-     <form>
+    <style>
+        form {
+            width: 100%;
+            max-width: 520px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-col {
+            flex: 1;
+        }
+        .register-head label {
+            margin-top: 12px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .register-head input, .register-head select {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
+            transition: 0.2s;
+        }
+        .register-head input:focus, .register-head select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+        .error-banner {
+            display: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #f87171;
+        }
+        .success-banner {
+            display: none;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #86efac;
+        }
+        .register button {
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .register button:hover {
+            background-color: #1d4ed8;
+        }
+        .register button:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+        }
+        .back-links {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .back-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <form id="registerForm">
         <section class="register-head">
-        <h3>Sign Up</h3>
-        <label for="email">Email</label>
-        <input type="email"
-                id="email"
-                placeholder="Enter your email">
-        <label for="password">Password</label>
-        <input type="password"
-                id="password"
-                placeholder="Enter your password">
+            <div style="text-align:center; margin-bottom:10px;">
+                <img src="fina.png" alt="TraceBack Logo" style="width:48px; height:48px;">
+            </div>
+            <h3>Create Account</h3>
+            <p style="text-align:center; color:#64748b; font-size:14px; margin-bottom:15px;">Join the TraceBack college community</p>
+
+            <div id="errorBanner" class="error-banner"></div>
+            <div id="successBanner" class="success-banner"></div>
+
+            <!-- Name row matching ER Diagram: Fname, Minit, Lname -->
+            <div class="form-row">
+                <div class="form-col" style="flex:2;">
+                    <label for="fname">First Name *</label>
+                    <input type="text" id="fname" required placeholder="e.g. Ayfa">
+                </div>
+                <div class="form-col" style="flex:1;">
+                    <label for="minit">M.I.</label>
+                    <input type="text" id="minit" maxlength="2" placeholder="M">
+                </div>
+                <div class="form-col" style="flex:2;">
+                    <label for="lname">Last Name *</label>
+                    <input type="text" id="lname" required placeholder="e.g. Mehrin">
+                </div>
+            </div>
+
+            <!-- College Email with Authentication -->
+            <label for="clg_email">College Email Address *</label>
+            <input type="email" id="clg_email" required placeholder="e.g. student@campus.edu">
+            <div id="emailAuthStatus" style="font-size:12px; margin-top:-6px; margin-bottom:12px; color:#2563eb; display:flex; align-items:center; gap:6px;">
+                <span>🔒 Email authentication required to prevent unauthorized reports</span>
+            </div>
+
+            <!-- Department & Role -->
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="dept">Department *</label>
+                    <input type="text" id="dept" required placeholder="e.g. Computer Science">
+                </div>
+                <div class="form-col">
+                    <label for="role">Campus Role *</label>
+                    <select id="role" required>
+                        <option value="Student">Student</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Phone Number (matching Phone table) -->
+            <label for="phoneno">Contact Phone Number *</label>
+            <input type="tel" id="phoneno" required placeholder="e.g. +91 9876543210">
+
+            <!-- Password & Confirm -->
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" required minlength="6" placeholder="Min. 6 characters">
+                </div>
+                <div class="form-col">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" required minlength="6" placeholder="Re-enter password">
+                </div>
+            </div>
         </section>
+
         <section class="register-tail">
             <div class="remember">
-            <input type="checkbox">
-            <label>Remember me</label>
-        </div>
-        
-        <div class="register">
-        <button type="submit">
-            Register
-        </button>
-        </div>
-        
+                <input type="checkbox" id="termsCheck" required>
+                <label for="termsCheck" style="display:inline; margin:0; cursor:pointer; font-weight:normal; font-size:13px;">
+                    I agree to the college lost & found policy
+                </label>
+            </div>
+            
+            <div class="register">
+                <button type="submit" id="submitBtn">Verify Email & Register</button>
+            </div>
         </section>
-        
 
-     </form>
-    </body>
-    </head>
+        <div class="back-links">
+            <span style="color:#64748b;">Already have an account?</span>
+            <a href="login.html">Sign In</a>
+            <div style="margin-top:10px;">
+                <a href="home.html" style="color:#64748b; font-weight:normal;">← Back to Home</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- Email Authentication Verification Modal -->
+    <div id="otpModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(11,29,77,0.7); backdrop-filter:blur(4px); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:20px; padding:35px; max-width:440px; width:90%; box-shadow:0 25px 50px rgba(0,0,0,0.25); text-align:center;">
+            <div style="width:56px; height:56px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:26px;">
+                ✉️
+            </div>
+            <h3 style="color:#0b1b45; font-size:22px; margin-bottom:8px;">Authenticate College Email</h3>
+            <p style="color:#64748b; font-size:14px; margin-bottom:15px; line-height:1.5;">
+                We have generated a 6-digit authentication code for <br><strong id="modalTargetEmail" style="color:#0f172a;"></strong>.
+            </p>
+
+            <div id="modalNotice" style="background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; padding:10px; border-radius:10px; font-size:13px; margin-bottom:18px;">
+                <span>Security Code: <strong id="modalDemoCode" style="letter-spacing:2px; font-size:16px;"></strong></span>
+            </div>
+
+            <div style="margin-bottom:20px; text-align:left;">
+                <label for="otpInput" style="font-size:13px; font-weight:600; color:#334155; display:block; margin-bottom:6px;">Enter 6-Digit Code</label>
+                <input type="text" id="otpInput" maxlength="6" placeholder="123456" style="width:100%; text-align:center; font-size:22px; letter-spacing:6px; font-weight:bold; padding:12px; border:2px solid #cbd5e1; border-radius:12px; outline:none;">
+            </div>
+
+            <div id="modalError" style="display:none; color:#dc2626; font-size:13px; margin-bottom:12px;"></div>
+
+            <div style="display:flex; gap:10px;">
+                <button type="button" id="modalVerifyBtn" style="flex:1; background:#2563eb; color:white; border:none; padding:14px; border-radius:12px; font-weight:bold; font-size:15px; cursor:pointer;">Verify & Register</button>
+                <button type="button" id="modalCancelBtn" style="background:#f1f5f9; color:#475569; border:none; padding:14px 20px; border-radius:12px; font-weight:600; cursor:pointer;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        const form = document.getElementById('registerForm');
+        const errorBanner = document.getElementById('errorBanner');
+        const successBanner = document.getElementById('successBanner');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // OTP modal elements
+        const otpModal = document.getElementById('otpModal');
+        const modalTargetEmail = document.getElementById('modalTargetEmail');
+        const modalDemoCode = document.getElementById('modalDemoCode');
+        const otpInput = document.getElementById('otpInput');
+        const modalVerifyBtn = document.getElementById('modalVerifyBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalError = document.getElementById('modalError');
+
+        let pendingUserData = null;
+
+        modalCancelBtn.addEventListener('click', () => {
+            otpModal.style.display = 'none';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Verify Email & Register';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorBanner.style.display = 'none';
+            successBanner.style.display = 'none';
+
+            const fname = document.getElementById('fname').value.trim();
+            const minit = document.getElementById('minit').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const clg_email = document.getElementById('clg_email').value.trim();
+            const dept = document.getElementById('dept').value.trim();
+            const role = document.getElementById('role').value;
+            const phoneno = document.getElementById('phoneno').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!fname || !lname || !clg_email || !dept || !password) {
+                errorBanner.textContent = 'Please fill in all required fields.';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(clg_email)) {
+                errorBanner.textContent = 'Please enter a valid college email address format.';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorBanner.textContent = 'Passwords do not match.';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorBanner.textContent = 'Password must be at least 6 characters.';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Authenticating email...';
+
+            pendingUserData = { fname, minit, lname, clg_email, dept, role, phoneno, password };
+
+            try {
+                // Request email verification code
+                const verifyRes = await TraceBackAPI.sendEmailVerification(clg_email);
+                if (verifyRes.success) {
+                    modalTargetEmail.textContent = clg_email;
+                    modalDemoCode.textContent = verifyRes.code || '123456';
+                    otpInput.value = verifyRes.code || '';
+                    modalError.style.display = 'none';
+                    otpModal.style.display = 'flex';
+                } else {
+                    throw new Error(verifyRes.error || 'Failed to send verification code');
+                }
+            } catch (err) {
+                errorBanner.textContent = err.message || 'Error authenticating email. Please try again.';
+                errorBanner.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Verify Email & Register';
+            }
+        });
+
+        // Verify OTP code & complete account creation
+        modalVerifyBtn.addEventListener('click', async () => {
+            const enteredCode = otpInput.value.trim();
+            if (!enteredCode || enteredCode.length < 6) {
+                modalError.textContent = 'Please enter the 6-digit verification code.';
+                modalError.style.display = 'block';
+                return;
+            }
+
+            modalVerifyBtn.disabled = true;
+            modalVerifyBtn.textContent = 'Verifying...';
+
+            try {
+                // Verify the code
+                const verifyCheck = await TraceBackAPI.verifyEmailCode(pendingUserData.clg_email, enteredCode);
+                if (!verifyCheck.success) {
+                    throw new Error(verifyCheck.error || 'Invalid code.');
+                }
+
+                // Complete registration
+                const regRes = await TraceBackAPI.register(pendingUserData);
+                if (regRes.success) {
+                    otpModal.style.display = 'none';
+                    successBanner.textContent = '✓ College email authenticated! Redirecting to dashboard...';
+                    successBanner.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 900);
+                } else {
+                    throw new Error(regRes.error || 'Registration failed.');
+                }
+            } catch (err) {
+                modalError.textContent = err.message || 'Verification failed. Please try again.';
+                modalError.style.display = 'block';
+                modalVerifyBtn.disabled = false;
+                modalVerifyBtn.textContent = 'Verify & Register';
+            }
+        });
+
+    </script>
+</body>
 </html>

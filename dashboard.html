@@ -1,253 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-            content="width=device-width", initial-scale=1.0">
-        <title>
-            TraceBack.Dashboard
-        </title>
-        <link rel="stylesheet" href="dashboard.css">
-    </head>
-    <body>
-        <div class="dashboard">
-            <aside class="sidebar"><!--aside-represents content placed beside the main content.-->
-                    <div class="logo">
-                        <img src="fina.png">
-                        <h2>TraceBack</h2>
-                    </div>
-                    <ul>
-                       <ul>
-                            <li>
-                                <a href="dashboard.html">🏠 Dashboard</a>
-                            </li>
-
-                            <li>
-                                 <a href="report-lost.html">📤 Report Lost</a>
-                            </li>
-
-                            <li>
-                                 <a href="report-found.html">📦 Report Found</a>
-                            </li>
-
-                            <li>
-                                <a href="search.html">🔍 Search</a>
-                            </li>
-
-                            <li>
-                                <a href="profile.html">👤 Profile</a>
-                            </li>
-
-                            <li>
-                                <a href="settings.html">⚙ Settings</a>
-                            </li>
-
-                            <li>
-                                <a href="login.html">🚪 Logout</a>
-                            </li>
-
-                    </ul>
-            </aside>
-
-            <main class="main-content">
-                <div class="welcome-card">
-                    <h2>Welcome Back 👋</h2>
-                    <p>Let's help you reconnect with your belongings.</p>
-
-                </div>
-
-                    <div class="form-card">
-                        <h1>Report Lost Item</h1>
-                        <p>Fill in the details below to help others identify your lost item</p>
-
-                        <form>
-                            <!--image upload-->
-                            <div class="input-group">
-                                <label>Upload Item Image</label>
-                                <div class="upload-box">
-                                    <input type="file" id="imageUpload" hidden>
-                                    <label for="imageUpload" class="upload-label">
-                                        <div class="upload-icon">📷</div>
-                                        <h3>drag and drop image</h3>
-                                        <p>or click to browse</p>
-                                    </label>
-                                </div>
-                                <img id="previewImage">
-                            </div>
-                            <!--item name-->
-                            <div class="input-group">
-                                <label>Item Name</label>
-                                <input type="text" placeholder="eg:MacBook Air">
-                            </div>
-                            <!--category-->
-                            <div class="input-group">
-                                <label>Category</label>
-                                <select>
-                                    <option>select category</option>
-                                    <option>Electronics</option>
-                                    <option>Books</option>
-
-                                    <option>Bag</option>
-
-                                    <option>Keys</option>
-
-                                    <option>ID Card</option>
-
-                                    <option>Wallet</option>
-
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <!--description-->
-                            <div class="input-group">
-                                <label>Description</label>
-                                <textarea placeholder="Describe your item..."></textarea>
-                            </div>
-                            <!--location-->
-                            <div class="input-group">
-                                <label>Last Seen Location</label>
-                                <input type="text" placeholder="eg:Library">
-                            </div>
-                            <!--Date-->
-                            <div class="input-group">
-                                <label>Date Lost</label>
-                                <input type="date">
-                            </div>
-                            <!--Contact-->
-                            <div class="input-group">
-                                <label>Contact number</label>
-                                <input type="tel">
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                Submit report
-                            </button>
-                        </form>
-                    </div>
-                <div class="form-card">
-                    <h1>Report Found Item</h1>
-                    <p> Help reunite someone with their belongings by providing accurate information.</p>
-
-                    <form>
-                        <!--image upload-->
-                        <div class="input-group">
-                            <label>Upload Item Image</label>
-                            <div class="upload-box">
-                                <input type="file" id="imageUpload" hidden>
-                                <label for="imageUpload" class="upload-label">
-                                <div class="upload-icon">📷</div>
-                                    <h3>drag and drop image</h3>
-                                    <p>or click to browse</p>
-                                </label>
-                                </div>
-                                <img id="previewImage">
-                             </div>
-                            <!--item name-->
-                            <div class="input-group">
-                                <label>Item Name</label>
-                                <input type="text" placeholder="eg:MacBook Air">
-                            </div>
-                            <!--category-->
-                            <div class="input-group">
-                                <label>Category</label>
-                                <select>
-                                    <option>select category</option>
-                                    <option>Electronics</option>
-                                    <option>Books</option>
-
-                                    <option>Bag</option>
-
-                                    <option>Keys</option>
-
-                                    <option>ID Card</option>
-
-                                    <option>Wallet</option>
-
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <label>Description</label>
-                                <textarea placeholder="Describe your item..."></textarea>
-                            </div>
-                            <div class="input-group">
-                                <label>Found Location</label>
-                                <input type="text" placeholder="eg:Library">
-                            </div>
-                            <!--Date-->
-                            <div class="input-group">
-                                <label>Date Found</label>
-                                <input type="date">
-                            </div>
-                           <!--time-->
-                            <div class="input-group">
-                                <label>Time Found</label>
-                                <input type="time">
-                            </div>
-                            <!--current location-->
-                            <div class="input-group">
-                                <label>Current Storage Location</label>
-                                <input type="text" placeholder="Eg: Security Office">
-                            </div>
-                            <!--extra-->
-                            <div class="input-group">
-                                <label>Additional Notes</label>
-                                <textarea placeholder="Any extra information about where or how you found the item.">
-                                </textarea>
-                            </div>
-                            <!--Contact-->
-                            <div class="input-group">
-                                <label>Contact number</label>
-                                <input type="tel">
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                Submit report
-                            </button>
-                        </form>
-                    </div>
-
-                <div class="stats">
-                     <div class="stat-card">
-
-                         <h2>2</h2>
-
-                        <p>Lost Reports</p>
-
-                </div>
-
-                <div class="stat-card">
-
-                        <h2>1</h2>
-
-                        <p>Found Reports</p>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h2>1</h2>
-
-                     <p>Pending Claims</p>
-
-                </div>
-
-            </div>
-            <div class="activity">
-
-                <h2>Recent Activity</h2>
-
-                <ul>
-
-                    <li>✔ Reported MacBook Air</li>
-
-                    <li>✔ Claimed Water Bottle</li>
-
-                    <li>✔ Updated Profile</li>
-
-                    </ul>
-
-            </div>
-        </main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .quick-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-action-lost {
+            background: #ef4444;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-action-lost:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+        .btn-action-found {
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-action-found:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        .stat-card-clickable {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+        }
+        .empty-activity {
+            text-align: center;
+            padding: 30px;
+            color: #94a3b8;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
         </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
 
-    </body>
-    </html>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li class="active">
+                    <a href="dashboard.html">🏠 Dashboard</a>
+                </li>
+                <li>
+                    <a href="reportlost.html">📤 Report Lost</a>
+                </li>
+                <li>
+                    <a href="reportfound.html">📦 Report Found</a>
+                </li>
+                <li>
+                    <a href="search.html">🔍 Search Items</a>
+                </li>
+                <li>
+                    <a href="myreports.html">📋 My Reports</a>
+                </li>
+                <li>
+                    <a href="myclaims.html">🙋 My Claims</a>
+                </li>
+                <li>
+                    <a href="profile.html">👤 Profile</a>
+                </li>
+                <li>
+                    <a href="settings.html">⚙ Settings</a>
+                </li>
+                <li>
+                    <a href="login.html" id="logoutLink">🚪 Logout</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Welcome Header Card -->
+            <div class="welcome-card">
+                <h2 id="welcomeHeading">Welcome Back 👋</h2>
+                <p>Let's help you reconnect with your belongings on campus.</p>
+                <div class="quick-actions">
+                    <a href="reportlost.html" class="btn-action-lost">📤 Report Lost Item</a>
+                    <a href="reportfound.html" class="btn-action-found">📦 Report Found Item</a>
+                    <a href="search.html" class="btn-secondary" style="padding:12px 20px; border-radius:12px; display:inline-flex; align-items:center; gap:8px;">🔍 Search Database</a>
+                </div>
+            </div>
+
+            <!-- Dynamic Summary Statistics -->
+            <div class="stats">
+                <div class="stat-card" style="margin-top:0;">
+                    <a href="search.html?type=lost" class="stat-card-clickable">
+                        <h2 id="statLostCount" style="color:#ef4444; font-size:42px;">0</h2>
+                        <p style="font-weight:600; color:#475569; margin-top:5px;">Lost Reports</p>
+                        <span style="font-size:12px; color:#94a3b8;">Active lost notices</span>
+                    </a>
+                </div>
+
+                <div class="stat-card" style="margin-top:0;">
+                    <a href="search.html?type=found" class="stat-card-clickable">
+                        <h2 id="statFoundCount" style="color:#10b981; font-size:42px;">0</h2>
+                        <p style="font-weight:600; color:#475569; margin-top:5px;">Found Reports</p>
+                        <span style="font-size:12px; color:#94a3b8;">Recovered items available</span>
+                    </a>
+                </div>
+
+                <div class="stat-card" style="margin-top:0;">
+                    <a href="myclaims.html" class="stat-card-clickable">
+                        <h2 id="statClaimsCount" style="color:#3b82f6; font-size:42px;">0</h2>
+                        <p style="font-weight:600; color:#475569; margin-top:5px;">Pending Claims</p>
+                        <span style="font-size:12px; color:#94a3b8;">Verification in progress</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Possible Matches Feature (Section 4) -->
+            <div class="matches-section" id="matchesSection" style="display:none;">
+                <div class="matches-header">
+                    <div>
+                        <h2 style="color:#0b1b45; font-size:22px;">🎯 Suggested Possible Matches</h2>
+                        <p style="color:#64748b; font-size:14px;">Automated similarity analysis between campus Lost and Found reports</p>
+                    </div>
+                    <span class="badge badge-review" id="matchesCountBadge">Matches</span>
+                </div>
+                <div id="matchesList">
+                    <!-- Populated dynamically via API -->
+                </div>
+            </div>
+
+            <!-- Recent Activity Section -->
+            <div class="activity">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2 style="color:#0b1b45;">Recent Campus Activity</h2>
+                    <a href="search.html" style="color:#1d4ed8; text-decoration:none; font-size:14px; font-weight:600;">View All →</a>
+                </div>
+                <ul id="activityList">
+                    <li style="color:#94a3b8;">Loading recent activity...</li>
+                </ul>
+            </div>
+
+            <!-- Dashboard Footer -->
+            <footer class="content-footer" style="margin-top:40px; padding:20px 0; border-top:1px solid #e2e8f0; text-align:center; color:#64748b; font-size:13px;">
+                <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to access the dashboard.')) {
+                return;
+            }
+
+            const user = TraceBackAPI.getCurrentUser();
+            if (user) {
+                document.getElementById('welcomeHeading').textContent = `Welcome Back, ${user.fname} 👋`;
+            }
+
+            // Load real stats from database/API
+            try {
+                const res = await TraceBackAPI.getDashboardStats();
+                if (res && res.stats) {
+                    document.getElementById('statLostCount').textContent = res.stats.lost_reports ?? 0;
+                    document.getElementById('statFoundCount').textContent = res.stats.found_reports ?? 0;
+                    document.getElementById('statClaimsCount').textContent = res.stats.pending_claims ?? 0;
+                }
+            } catch (err) {
+                console.error('Stats error:', err);
+                document.getElementById('statLostCount').textContent = '0';
+                document.getElementById('statFoundCount').textContent = '0';
+                document.getElementById('statClaimsCount').textContent = '0';
+            }
+
+
+            // Load recent activity
+            try {
+                const actRes = await TraceBackAPI.getDashboardActivity();
+                const list = document.getElementById('activityList');
+                if (actRes && actRes.activities && actRes.activities.length > 0) {
+                    list.innerHTML = actRes.activities.map(a => {
+                        const icon = a.type === 'lost' ? '🔴' : a.type === 'found' ? '🟢' : '🔵';
+                        const timeAgo = formatTimeAgo(a.date);
+                        return `
+                            <li style="display:flex; justify-content:space-between; align-items:center;">
+                                <span>${icon} ${escapeHtml(a.text)}</span>
+                                <span style="font-size:12px; color:#94a3b8;">${timeAgo}</span>
+                            </li>
+                        `;
+                    }).join('');
+                } else {
+                    list.innerHTML = `<div class="empty-activity">No recent activity recorded yet. Reports will appear here.</div>`;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            // Load possible matches (Section 4)
+            try {
+                const matchRes = await TraceBackAPI.getMatches();
+                if (matchRes && matchRes.matches && matchRes.matches.length > 0) {
+                    const section = document.getElementById('matchesSection');
+                    const badge = document.getElementById('matchesCountBadge');
+                    const container = document.getElementById('matchesList');
+                    section.style.display = 'block';
+                    badge.textContent = `${matchRes.matches.length} Match${matchRes.matches.length > 1 ? 'es' : ''} Found`;
+
+                    container.innerHTML = matchRes.matches.map(m => `
+                        <div class="match-card">
+                            <div style="flex:1; min-width:240px;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span class="match-score-badge">${m.score}% Estimated Match</span>
+                                    <span style="font-size:12px; color:#64748b;">(Compatible Category & Keywords)</span>
+                                </div>
+                                <h4 style="margin-top:8px; color:#0b1b45; font-size:16px;">
+                                    Lost: "${escapeHtml(m.lost_item.name)}" ⇄ Found: "${escapeHtml(m.found_item.name)}"
+                                </h4>
+                                <div class="match-reasons-list">
+                                    ${m.reasons.map(r => `• ${escapeHtml(r)}`).join('<br>')}
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <a href="details.html?type=found&id=${m.found_item.id}" class="btn-primary" style="padding:8px 16px; font-size:13px;">View Found Item</a>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) {
+                console.error('Match engine check:', e);
+            }
+        });
+
+        function formatTimeAgo(isoString) {
+            if (!isoString) return '';
+            const diff = (Date.now() - new Date(isoString)) / 1000;
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            return `${Math.floor(diff / 86400)}d ago`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

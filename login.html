@@ -1,46 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-            content="width=device-width", initial-scale=1.0">
-    <title>TraceBack.Login</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Login</title>
     <link rel="stylesheet" href="login.css">
-    <body>
-     <form>
+    <style>
+        .error-banner {
+            display: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #f87171;
+        }
+        .success-banner {
+            display: none;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #86efac;
+        }
+        .login button:disabled {
+            background: #93c5fd;
+            cursor: not-allowed;
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .back-home a {
+            color: #64748b;
+            text-decoration: none;
+        }
+        .back-home a:hover {
+            color: #0b1b45;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
         <section class="login-head">
-        <h3>Welcome Back !</h3>
-        <label for="email">Email</label>
-        <input type="email"
-                id="email"
-                placeholder="Enter your email">
-        <label for="password">Password</label>
-        <input type="password"
-                id="password"
-                placeholder="Enter your password">
+            <div style="text-align:center; margin-bottom:10px;">
+                <img src="fina.png" alt="TraceBack Logo" style="width:48px; height:48px;">
+            </div>
+            <h3>Welcome Back !</h3>
+            <p style="text-align:center; color:#64748b; font-size:14px; margin-bottom:15px;">Sign in to your TraceBack account</p>
+
+            <div id="infoBanner" style="display:none; background:#eff6ff; color:#1d4ed8; padding:12px; border-radius:8px; font-size:14px; margin-bottom:15px; text-align:center; border:1px solid #bfdbfe; font-weight:500;"></div>
+            <div id="errorBanner" class="error-banner"></div>
+            <div id="successBanner" class="success-banner"></div>
+
+            <label for="email">College Email</label>
+            <input type="email" id="email" required placeholder="e.g. student@campus.edu">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" required placeholder="Enter your password">
         </section>
+
         <section class="login-tail">
             <div class="remember">
-            <input type="checkbox">
-            <label>Remember me</label>
-        </div>
-        <div class="forgot">
-        <a href="#">Forgot password?</a>
-    </div>
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe" style="display:inline; margin:0; cursor:pointer;">Remember me</label>
+            </div>
+            <div class="forgot">
+                <a href="#" id="forgotBtn" style="color:#2563eb; text-decoration:none; font-size:14px;">Forgot password?</a>
+            </div>
         </section>
-        <div class="login">
-        <button type="submit">
-            Login
-        </button>
-        </div>
-        <div class="signup">
-            <h3>Don't have an account?</h3>
-            <a href="regiter.html">Sign Up</a>
-        </div>
-        
-        
 
-     </form>
-    </body>
-    </head>
+        <div class="login">
+            <button type="submit" id="submitBtn">Login</button>
+        </div>
+
+        <div class="signup">
+            <h3 style="font-size:15px; font-weight:normal; color:#475569;">Don't have an account?</h3>
+            <a href="register.html" style="color:#2563eb; font-weight:600; text-decoration:none;">Sign Up</a>
+        </div>
+
+        <div class="back-home">
+            <a href="home.html">← Back to Home</a>
+        </div>
+    </form>
+
+    <script src="api.js"></script>
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorBanner = document.getElementById('errorBanner');
+        const successBanner = document.getElementById('successBanner');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectMsg = urlParams.get('msg');
+        if (redirectMsg) {
+            const infoBanner = document.getElementById('infoBanner');
+            if (infoBanner) {
+                infoBanner.innerHTML = `🔒 ${escapeHtml(redirectMsg)}<br><small style="color:#2563eb;">New user? <a href="register.html" style="color:#2563eb; font-weight:bold;">Create an account here</a></small>`;
+                infoBanner.style.display = 'block';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.getElementById('forgotBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('To reset your college credentials, please contact your campus IT Administrator or Security Office at security@traceback.edu.');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorBanner.style.display = 'none';
+            successBanner.style.display = 'none';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                errorBanner.textContent = 'Please enter both your college email and password.';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorBanner.textContent = 'Please enter a valid email address format (e.g. student@campus.edu).';
+                errorBanner.style.display = 'block';
+                return;
+            }
+
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing in...';
+
+
+            try {
+                const res = await TraceBackAPI.login(email, password);
+                if (res.success) {
+                    successBanner.textContent = 'Login successful! Redirecting to dashboard...';
+                    successBanner.style.display = 'block';
+
+                    setTimeout(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirectUrl = urlParams.get('redirect') || 'dashboard.html';
+                        window.location.href = redirectUrl;
+                    }, 800);
+                } else {
+                    throw new Error(res.error || 'Authentication failed');
+                }
+            } catch (err) {
+                errorBanner.textContent = err.message || 'Invalid email or password.';
+                errorBanner.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            }
+        });
+    </script>
+</body>
 </html>

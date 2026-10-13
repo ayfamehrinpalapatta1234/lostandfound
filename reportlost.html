@@ -1,81 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-            content="width=device-width", initial-scale=1.0">
-        <title>
-            TraceBack.Dashboard
-        </title>
-        <link rel="stylesheet" href="dashboard.css">
-    </head>
-    <body>
-        <div class="form-card">
-                        <h1>Report Lost Item</h1>
-                        <p>Fill in the details below to help others identify your lost item</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Report Lost Item</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .form-section-title {
+            font-size: 18px;
+            color: #0b1b45;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            font-weight: 700;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .form-row .input-group {
+            flex: 1;
+            min-width: 240px;
+        }
+        .image-preview-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .remove-img-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
 
-                        <form>
-                            <!--image upload-->
-                            <div class="input-group">
-                                <label>Upload Item Image</label>
-                                <div class="upload-box">
-                                    <input type="file" id="imageUpload" hidden>
-                                    <label for="imageUpload" class="upload-label">
-                                        <div class="upload-icon">📷</div>
-                                        <h3>drag and drop image</h3>
-                                        <p>or click to browse</p>
-                                    </label>
-                                </div>
-                                <img id="previewImage">
-                            </div>
-                            <!--item name-->
-                            <div class="input-group">
-                                <label>Item Name</label>
-                                <input type="text" placeholder="eg:MacBook Air">
-                            </div>
-                            <!--category-->
-                            <div class="input-group">
-                                <label>Category</label>
-                                <select>
-                                    <option>select category</option>
-                                    <option>Electronics</option>
-                                    <option>Books</option>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li class="active"><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
 
-                                    <option>Bag</option>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-card">
+                <h1>Report Lost Item</h1>
+                <p>Help us find your lost belonging by providing accurate details.</p>
 
-                                    <option>Keys</option>
-
-                                    <option>ID Card</option>
-
-                                    <option>Wallet</option>
-
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <!--description-->
-                            <div class="input-group">
-                                <label>Description</label>
-                                <textarea placeholder="Describe your item..."></textarea>
-                            </div>
-                            <!--location-->
-                            <div class="input-group">
-                                <label>Last Seen Location</label>
-                                <input type="text" placeholder="eg:Library">
-                            </div>
-                            <!--Date-->
-                            <div class="input-group">
-                                <label>Date Lost</label>
-                                <input type="date">
-                            </div>
-                            <!--Contact-->
-                            <div class="input-group">
-                                <label>Contact number</label>
-                                <input type="tel">
-                            </div>
-                            <button type="submit" class="submit-btn">
-                                Submit report
-                            </button>
-                        </form>
+                <form id="reportLostForm">
+                    <!-- SECTION 1: Item Information -->
+                    <div class="form-section-title">1. Item Information</div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="itemName">Item Name *</label>
+                            <input type="text" id="itemName" required placeholder="e.g. MacBook Air M2, Wildcraft Backpack">
+                        </div>
+                        <div class="input-group">
+                            <label for="category">Category *</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Documents">Documents</option>
+                                <option value="Bags">Bags</option>
+                                <option value="Wallets">Wallets</option>
+                                <option value="Keys">Keys</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Books">Books</option>
+                                <option value="ID Cards">ID Cards</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
-    </body>
-    </html>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="color">Color</label>
+                            <input type="text" id="color" placeholder="e.g. Space Grey, Matte Black, Blue">
+                        </div>
+                        <div class="input-group">
+                            <label for="brand">Brand or Model</label>
+                            <input type="text" id="brand" placeholder="e.g. Apple, Dell, Wildcraft, Casio">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="description">Item Description *</label>
+                        <textarea id="description" required placeholder="Describe appearance, stickers, scratches, contents, or distinguishing features..."></textarea>
+                    </div>
+
+                    <!-- SECTION 2: Location & Date Details -->
+                    <div class="form-section-title">2. Location & Date Details</div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="locationLost">Last Seen Location *</label>
+                            <input type="text" id="locationLost" required placeholder="e.g. IT Block - Room 302, Central Library">
+                        </div>
+                        <div class="input-group">
+                            <label for="dateLost">Date Lost *</label>
+                            <input type="date" id="dateLost" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="timeLost">Approximate Time</label>
+                            <input type="time" id="timeLost">
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: Identification & Contact -->
+                    <div class="form-section-title">3. Identification & Private Contact</div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="serialNumber">Serial Number / Unique ID (Kept Private)</label>
+                            <input type="text" id="serialNumber" placeholder="e.g. Device Serial, Roll No on ID card">
+                        </div>
+                        <div class="input-group">
+                            <label for="contactNumber">Contact Phone Number</label>
+                            <input type="tel" id="contactNumber" placeholder="e.g. +91 9876543210">
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: Image Upload -->
+                    <div class="form-section-title">4. Item Photograph</div>
+                    <div class="input-group">
+                        <label>Upload Item Photo (Max 5MB)</label>
+                        <div class="upload-box" onclick="document.getElementById('imageUpload').click()">
+                            <input type="file" id="imageUpload" accept="image/png, image/jpeg, image/webp" hidden>
+                            <div class="upload-label">
+                                <div class="upload-icon">📷</div>
+                                <h3>Click to browse or drop photo here</h3>
+                                <p>Supports PNG, JPG, JPEG, WebP</p>
+                            </div>
+                        </div>
+                        <div class="image-preview-container">
+                            <img id="previewImage" alt="Item Preview">
+                            <button type="button" class="remove-img-btn" id="removeImgBtn" title="Remove image">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-btn" id="submitBtn">Submit Lost Report</button>
+                        <a href="dashboard.html" class="btn-secondary" style="padding:16px 25px; border-radius:15px; display:inline-flex; align-items:center;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <footer class="content-footer">
+                <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to report a lost item.')) {
+                return;
+            }
+
+            // Pre-fill today's date
+            const dateInput = document.getElementById('dateLost');
+            if (dateInput) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+
+            // Pre-fill phone if available in session
+            const user = TraceBackAPI.getCurrentUser();
+            if (user && user.phoneno) {
+                document.getElementById('contactNumber').value = user.phoneno;
+            }
+
+            // Image removal logic
+            const imageInput = document.getElementById('imageUpload');
+            const preview = document.getElementById('previewImage');
+            const removeBtn = document.getElementById('removeImgBtn');
+
+            imageInput.addEventListener('change', () => {
+                if (imageInput.files && imageInput.files[0]) {
+                    removeBtn.style.display = 'flex';
+                }
+            });
+
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                imageInput.value = '';
+                preview.src = '';
+                preview.style.display = 'none';
+                removeBtn.style.display = 'none';
+                showToast('Image removed', 'info');
+            });
+
+            // Form submission
+            const form = document.getElementById('reportLostForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting report...';
+
+                let imageUrl = 'fina.png';
+                if (preview.src && preview.src.startsWith('data:image')) {
+                    imageUrl = preview.src; // or base64 representation
+                }
+
+                const reportData = {
+                    item_name: document.getElementById('itemName').value.trim(),
+                    category: document.getElementById('category').value,
+                    color: document.getElementById('color').value.trim(),
+                    brand: document.getElementById('brand').value.trim(),
+                    description: document.getElementById('description').value.trim(),
+                    location_lost: document.getElementById('locationLost').value.trim(),
+                    date_lost: document.getElementById('dateLost').value,
+                    time_lost: document.getElementById('timeLost').value,
+                    serial_number: document.getElementById('serialNumber').value.trim(),
+                    contact_number: document.getElementById('contactNumber').value.trim(),
+                    image_url: imageUrl
+                };
+
+                try {
+                    const res = await TraceBackAPI.reportLost(reportData);
+                    if (res.success) {
+                        showToast('Lost item reported successfully!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'myreports.html?tab=lost';
+                        }, 1000);
+                    } else {
+                        throw new Error(res.error || 'Failed to submit report');
+                    }
+                } catch (err) {
+                    showToast(err.message || 'Error saving report', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Lost Report';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Item Details</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .details-layout {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        .details-image-col {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+        }
+        .details-image-box {
+            width: 100%;
+            height: 380px;
+            background: #f8fafc;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .details-image-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .details-info-col {
+            flex: 1.5;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+        .details-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        .details-title {
+            font-size: 32px;
+            color: #0b1b45;
+            font-weight: 700;
+        }
+        .details-meta-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .details-meta-table td {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 15px;
+        }
+        .details-meta-table td.label {
+            width: 160px;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .details-meta-table td.val {
+            color: #0f172a;
+            font-weight: 500;
+        }
+        .action-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card-full" id="detailsCard">
+                <div style="margin-bottom:15px;">
+                    <a href="search.html" style="color:#64748b; text-decoration:none; font-size:14px; font-weight:600;">← Back to Search Results</a>
+                </div>
+
+                <div id="loadingBox" style="text-align:center; padding:50px; color:#64748b;">
+                    Loading item details...
+                </div>
+
+                <div id="detailsContent" style="display:none;">
+                    <div class="details-layout">
+                        <!-- Image Column -->
+                        <div class="details-image-col">
+                            <div class="details-image-box">
+                                <img id="itemImg" src="fina.png" alt="Item Image">
+                            </div>
+                            <div style="text-align:center; margin-top:15px; color:#94a3b8; font-size:13px;">
+                                Report ID: <code id="reportIdVal" style="background:#f1f5f9; padding:4px 8px; border-radius:6px; color:#0b1b45;">...</code>
+                            </div>
+                        </div>
+
+                        <!-- Info Column -->
+                        <div class="details-info-col">
+                            <div class="details-title-row">
+                                <h1 class="details-title" id="itemTitle">Item Name</h1>
+                                <span class="badge" id="itemBadge">Status</span>
+                            </div>
+
+                            <p id="itemDesc" style="color:#475569; font-size:16px; line-height:1.6; margin-bottom:20px;">
+                                Item description...
+                            </p>
+
+                            <table class="details-meta-table">
+                                <tr>
+                                    <td class="label">Report Type</td>
+                                    <td class="val" id="reportTypeVal">Found Item</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Category</td>
+                                    <td class="val" id="categoryVal">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Color</td>
+                                    <td class="val" id="colorVal">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Brand / Model</td>
+                                    <td class="val" id="brandVal">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Location</td>
+                                    <td class="val" id="locationVal">-</td>
+                                </tr>
+                                <tr id="storageRow">
+                                    <td class="label">Storage Location</td>
+                                    <td class="val" id="storageVal">Campus Security Office</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Reported Date</td>
+                                    <td class="val" id="dateVal">-</td>
+                                </tr>
+                                <tr id="identifyingRow">
+                                    <td class="label">Identifying Marks</td>
+                                    <td class="val" id="identifyingVal">-</td>
+                                </tr>
+                            </table>
+
+                            <!-- Action Box -->
+                            <div class="action-box" id="actionBox">
+                                <div>
+                                    <h4 id="actionTitle" style="color:#0b1b45; margin-bottom:4px;">Is this your lost belonging?</h4>
+                                    <p id="actionSub" style="color:#64748b; font-size:14px; margin:0;">File an official claim to initiate verified campus return.</p>
+                                </div>
+                                <div id="actionBtns" style="display:flex; gap:10px;">
+                                    <a href="#" id="claimBtn" class="btn-primary" style="padding:12px 24px;">🙋 Submit Claim</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="content-footer">
+                    <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = (urlParams.get('type') || 'found').toLowerCase();
+            const id = urlParams.get('id');
+
+            if (!id) {
+                alert('No item ID specified.');
+                window.location.href = 'search.html';
+                return;
+            }
+
+            try {
+                const res = await TraceBackAPI.getItemDetails(type, id);
+                if (!res || !res.item) throw new Error('Item not found');
+
+                const item = res.item;
+                const isOwner = res.isOwner;
+                const isFound = type === 'found';
+
+                document.getElementById('loadingBox').style.display = 'none';
+                document.getElementById('detailsContent').style.display = 'block';
+
+                document.getElementById('itemTitle').textContent = item.item_name;
+                document.getElementById('itemDesc').textContent = item.description || 'No description provided.';
+                document.getElementById('categoryVal').textContent = item.category || 'Other';
+                document.getElementById('colorVal').textContent = item.color || 'Not specified';
+                document.getElementById('brandVal').textContent = item.brand || 'Not specified';
+                document.getElementById('locationVal').textContent = isFound ? item.location_found : item.location_lost;
+                document.getElementById('dateVal').textContent = isFound ? item.date_found : item.date_lost;
+                document.getElementById('reportTypeVal').textContent = isFound ? 'Found Item' : 'Lost Item';
+                document.getElementById('reportIdVal').textContent = isFound ? item.found_id : item.lost_id;
+
+                const badge = document.getElementById('itemBadge');
+                badge.textContent = isFound ? item.status : `Lost (${item.status})`;
+                badge.className = `badge ${isFound ? 'badge-found' : 'badge-lost'}`;
+
+                // Image
+                const img = document.getElementById('itemImg');
+                img.src = item.image_url || (isFound ? 'bottle.png' : 'fina.png');
+                img.onerror = () => { img.src = 'fina.png'; };
+
+                // Storage location (for found items)
+                if (isFound && item.storage_location) {
+                    document.getElementById('storageVal').textContent = item.storage_location;
+                } else {
+                    document.getElementById('storageRow').style.display = 'none';
+                }
+
+                // Identifying features (for found items)
+                if (isFound && item.identifying_features) {
+                    document.getElementById('identifyingVal').textContent = item.identifying_features;
+                } else {
+                    document.getElementById('identifyingRow').style.display = 'none';
+                }
+
+                // Action buttons logic
+                const actionBox = document.getElementById('actionBox');
+                const actionBtns = document.getElementById('actionBtns');
+                const claimBtn = document.getElementById('claimBtn');
+
+                if (isFound) {
+                    if (item.status === 'Available') {
+                        claimBtn.href = `claim.html?found_id=${item.found_id}`;
+                    } else {
+                        actionBox.innerHTML = `
+                            <div>
+                                <h4 style="color:#0b1b45;">Item Status: ${item.status}</h4>
+                                <p style="color:#64748b; font-size:14px;">This item is currently claimed or resolved.</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Lost item
+                    actionBox.innerHTML = `
+                        <div>
+                            <h4 style="color:#0b1b45;">Lost Item Notice</h4>
+                            <p style="color:#64748b; font-size:14px;">If you have found this item, please submit a Found report or hand it to Security.</p>
+                        </div>
+                        <div>
+                            <a href="reportfound.html" class="btn-primary" style="background:#10b981; text-decoration:none;">Report As Found</a>
+                        </div>
+                    `;
+                }
+
+                if (isOwner) {
+                    actionBtns.innerHTML += `
+                        <button id="delBtn" class="btn-danger" style="margin-left:10px;">Delete Report</button>
+                    `;
+                    document.getElementById('delBtn').addEventListener('click', async () => {
+                        if (confirm('Are you sure you want to delete this report? This cannot be undone.')) {
+                            try {
+                                await TraceBackAPI.deleteReport(type, id);
+                                showToast('Report deleted successfully', 'success');
+                                setTimeout(() => window.location.href = 'myreports.html', 1000);
+                            } catch (e) {
+                                showToast(e.message, 'error');
+                            }
+                        }
+                    });
+                }
+
+            } catch (err) {
+                document.getElementById('loadingBox').innerHTML = `
+                    <div style="color:#dc2626; font-size:18px; margin-bottom:15px;">Item not found</div>
+                    <p style="color:#64748b;">The report you are looking for may have been removed or does not exist.</p>
+                    <a href="search.html" class="btn-primary" style="display:inline-block; margin-top:15px; text-decoration:none;">Back to Search</a>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

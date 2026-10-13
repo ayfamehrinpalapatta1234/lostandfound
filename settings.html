@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Account Settings</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .settings-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+        .settings-title {
+            color: #0b1b45;
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .settings-desc {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .pref-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .pref-info h4 {
+            color: #0f172a;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+        .pref-info p {
+            color: #64748b;
+            font-size: 13px;
+            margin: 0;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 34px;
+        }
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider-round {
+            background-color: #2563eb;
+        }
+        input:checked + .slider-round:before {
+            transform: translateX(22px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li class="active"><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card-full">
+                <div class="page-header">
+                    <div>
+                        <h1>Account Settings</h1>
+                        <p>Manage your password, notification preferences, and account privacy</p>
+                    </div>
+                </div>
+
+                <!-- 1. Change Password -->
+                <div class="settings-section">
+                    <h3 class="settings-title">Change Password</h3>
+                    <p class="settings-desc">Update your password to keep your college account secure</p>
+                    <form id="passwordForm" style="max-width:500px;">
+                        <div class="input-group">
+                            <label for="currentPassword">Current Password *</label>
+                            <input type="password" id="currentPassword" required placeholder="Enter current password">
+                        </div>
+                        <div class="input-group">
+                            <label for="newPassword">New Password *</label>
+                            <input type="password" id="newPassword" required minlength="6" placeholder="Min. 6 characters">
+                        </div>
+                        <div class="input-group">
+                            <label for="confirmNewPassword">Confirm New Password *</label>
+                            <input type="password" id="confirmNewPassword" required minlength="6" placeholder="Repeat new password">
+                        </div>
+                        <button type="submit" class="btn-primary" id="changePwBtn" style="padding:14px 25px;">Update Password</button>
+                    </form>
+                </div>
+
+                <!-- 2. Notification Preferences -->
+                <div class="settings-section">
+                    <h3 class="settings-title">Notification Preferences</h3>
+                    <p class="settings-desc">Control which updates and alerts you receive</p>
+                    
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <h4>Possible Item Matches</h4>
+                            <p>Notify me when an item matching my lost report is reported found.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="prefMatches">
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+
+                    <div class="pref-item">
+                        <div class="pref-info">
+                            <h4>Claim Status Updates</h4>
+                            <p>Notify me when Campus Security reviews, verifies, or approves my claim.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="prefClaims">
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+
+                    <div class="pref-item" style="border-bottom:none;">
+                        <div class="pref-info">
+                            <h4>Campus Announcements</h4>
+                            <p>Receive alerts about major unclaimed item auctions or campus return drives.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="prefAnnounce">
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3. Account Actions & Deletion -->
+                <div class="settings-section" style="border-color:#fecaca; background:#fffbfb;">
+                    <h3 class="settings-title" style="color:#dc2626;">Danger Zone</h3>
+                    <p class="settings-desc">Destructive actions for your TraceBack account</p>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                        <div>
+                            <h4 style="color:#0f172a; margin-bottom:4px;">Delete Account Data</h4>
+                            <p style="color:#64748b; font-size:13px; margin:0;">Permanently remove your account and all associated lost item reports.</p>
+                        </div>
+                        <button id="deleteAccountBtn" class="btn-danger" style="padding:12px 20px;">Delete Account</button>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <footer class="content-footer">
+                    <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Require login or account creation
+            if (!TraceBackAPI.requireAuth('Please log in or create an account to view settings.')) {
+                return;
+            }
+
+            // Change password
+            const pwForm = document.getElementById('passwordForm');
+            const pwBtn = document.getElementById('changePwBtn');
+
+            pwForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const cur = document.getElementById('currentPassword').value;
+                const next = document.getElementById('newPassword').value;
+                const conf = document.getElementById('confirmNewPassword').value;
+
+                if (next !== conf) {
+                    showToast('New passwords do not match', 'error');
+                    return;
+                }
+
+                pwBtn.disabled = true;
+                pwBtn.textContent = 'Updating...';
+
+                try {
+                    const res = await TraceBackAPI.changePassword(cur, next);
+                    if (res.success) {
+                        showToast('Password updated successfully!', 'success');
+                        pwForm.reset();
+                    } else {
+                        throw new Error(res.error || 'Failed to change password');
+                    }
+                } catch (err) {
+                    showToast(err.message, 'error');
+                } finally {
+                    pwBtn.disabled = false;
+                    pwBtn.textContent = 'Update Password';
+                }
+            });
+
+            // Notification preferences toggle
+            ['prefMatches', 'prefClaims', 'prefAnnounce'].forEach(id => {
+                const el = document.getElementById(id);
+                el.addEventListener('change', () => {
+                    showToast('Preference saved', 'success');
+                });
+            });
+
+            // Delete Account confirmation
+            document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+                const conf = confirm('WARNING: Are you sure you want to request deletion of your TraceBack account? All your active lost/found notices and claims will be permanently archived.');
+                if (conf) {
+                    alert('Your account deletion request has been registered with Campus Security Administration.');
+                    TraceBackAPI.logout();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

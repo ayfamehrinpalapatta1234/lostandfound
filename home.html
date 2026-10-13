@@ -1,265 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" 
-            content="width=device-width", initial-scale=1.0">
-        <title>
-            Lost & Found Management System
-        </title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Lost & Found Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
 
-    </head>
+<body>
+    <!--Navbar Section-->
+    <header class="navbar">
+        <nav>
+            <div class="logo">
+                <a href="home.html" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+                    <img src="fina.png" alt="Traceback">
+                    <span style="font-weight:700; font-size:20px; color:#0b1b45;">TraceBack</span>
+                </a>
+            </div>
 
-    <body>
-        <!--Navbar Section-->
-        <header class="navbar">
-
-                <nav>
-                    <div class="logo">
-                        <img src="fina.png" alt="Traceback">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li>
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search" placeholder="Search items...">
                     </div>
-    
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" style="background:#0b1b45; color:white; padding:8px 18px; border-radius:20px; font-weight:600;">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
 
-                    <ul>
-           
-   
-                        <li><a href="#">Home</a></li>
-                        <li>
-                            <div class="search-box">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text"
-                                id="search"
-                                placeholder="Search here">
-                            </div>
-                        </li>
-                        <li><a href="login.html">Login</a></li>
+    <!--Hero section-->
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Lost items shouldn't stay lost</h1>
+                <h2>Find it back.</h2>
+                <div style="display:flex; gap:15px; margin-top:10px; justify-content:center; flex-wrap:wrap;">
+                    <a href="register.html" class="btn">Get Started</a>
+                    <a href="search.html" class="btn" style="background:#0b1b45; color:white;">Browse Items</a>
+                </div>
+            </div>
 
-                     </ul>
-                </nav>
+            <img src="iphone.png" class="floating mobile" alt="Mobile">
+            <img src="wallet.png" class="floating wallet" alt="Wallet">
+            <img src="backpack.png" class="floating backpack" alt="Backpack">
+            <img src="book.png" class="floating book" alt="Book"> 
+            <img src="calculator.png" class="floating calculator" alt="Calculator"> 
+            <img src="document.png" class="floating document" alt="Document">  
+        </section>
+    </main>
 
-        </header>
-
-        <!--Hero section-->
-            <main>
-                <section class="hero">
-                        <div class="hero-content">
-                            <h1>Lost items shouldn't stay lost</h1>
-                            <h2>Find it back.</h2>
-                            <a href="register.html" class="btn">
-                            Get started
-                            </a>
-                        </div>
-
-                        <img src="iphone.png" class="floating mobile">
-                        <img src="wallet.png" class="floating wallet">
-                        <img src="backpack.png" class="floating backpack">
-                        <img src="book.png" class="floating book"> 
-                        <img src="calculator.png" class="floating calculator"> 
-                        <img src="document.png" class="floating document">  
-                     
-                </section>
-            </main>
-    
     <!--Recently Found Items-->
     <section class="recent-items">
-            <h2>Recently Found Items</h2>
-            <div class="slider">
-
-                <div class="cards-container">
-
-                    <!--card1-->
-
-                    <div class="item-card">
-                        
-                        <img src="laptop.png" class="product-image" alt="Laptop">
-                        <div class="card-content">
-                            <h3>MacBook Air</h3>
-                            <span>📍 IT Block</span>
-                            <span>📅 22 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-
-                    <!--card2-->
-
-                    <div class="item-card">
-                        
-                        <img src="bottle.png" class="product-image" alt="Bottle">
-                        <div class="card-content">
-                            <h3>Water Bottle</h3>
-
-                            <span>📍 Library</span>
-
-                            <span>📅 21 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-
-                    <!--card3-->
-
-                    <div class="item-card">
-                    
-                        <img src="bag.png" class="product-image" alt="Bag">
-                        <div class="card-content">
-                            <h3>Backpack</h3>
-
-                            <span>📍 Main Gate</span>
-
-                            <span>📅 20 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-                    <!--card4-->
-
-                    <div class="item-card">
-                       
-                        <img src="headphones.png" class="product-image" alt="Headphones">
-                        <div class="card-content">
-                            <h3>Headphones</h3>
-
-                            <span>📍 Auditorium</span>
-
-                            <span>📅 20 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-
-                    <!--duplicate them-->
-
-                    
-                    <!--card1-->
-                    <div class="item-card">
-                        <img src="laptop.png" class="product-image" alt="Laptop">
-                        <div class="card-content">
-                            <h3>MacBook Air</h3>
-                            <span>📍 IT Block</span>
-                            <span>📅 22 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-
-                    <!--card2-->
-
-                    <div class="item-card">
-                       
-                        <img src="bottle.png" class="product-image" alt="Bottle">
-                        <div class="card-content">
-                            <h3>Water Bottle</h3>
-
-                            <span>📍 Library</span>
-
-                            <span>📅 21 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-
-                    <!--card3-->
-
-                    <div class="item-card">
-                        <img src="bag.png" class="product-image" alt="Bag">
-                        <div class="card-content">
-                            <h3>Backpack</h3>
-
-                            <span>📍 Main Gate</span>
-
-                            <span>📅 20 July 2026</span>
-                            <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
-                    <!--card4-->
-
-                    <div class="item-card">
-                        <img src="headphones.png" class="product-image" alt="Headphones">
-                        <div class="card-content">
-                            <h3>Headphones</h3>
-
-                            <span>📍 Auditorium</span>
-
-                            <span>📅 20 July 2026</span>
-                             <button class="view-btn">View Details</button>
-                        </div>
-                    </div>
+        <h2>Recently Found Items</h2>
+        <div class="slider">
+            <div class="cards-container" id="recentItemsContainer">
+                <div style="text-align:center; padding:45px 20px; width:100%; color:#64748b;">
+                    <div style="font-size:36px; margin-bottom:10px;">📦</div>
+                    <h4 style="color:#0b1b45; font-size:18px; margin-bottom:6px;">No Found Items Reported Yet</h4>
+                    <p style="margin:0; font-size:14px;">When items found across campus are submitted, they will appear here automatically.</p>
                 </div>
-            </div>   
+            </div>
+        </div>   
     </section>
 
-    <!--How traceback works secition-->
+    <!--How TraceBack Works Section-->
     <section class="how">
-            
-            <h2>How TraceBack Works?</h2>
-            <div class="workflow">
-
-                <div class="workflow-card">
-                    <span class="card_no">01</span>
-                    <div class="icon">📤</div>
-                    <h3>Report lost item</h3>
-                    <p> Users submit details about their lost belongings.</p>
-                </div>
-
-                  <div class="arrow">→</div>
-
-                 <div class="workflow-card">
-                    <span class="card_no">02</span>
-                    <div class="icon">📦</div>
-                    <h3>Report found item</h3>
-                    <p>Found items are added to the system database.</p>
-                </div>
-
-                  <div class="arrow">→</div>
-
-                <div class="workflow-card">
-                    <span class="card_no">03</span>
-                    <div class="icon">🔍</div>
-                    <h3>Search & Match</h3>
-                    <p>The system finds matching lost and found items.</p>
-                </div>
-
-                  <div class="arrow">→</div>
-
-                <div class="workflow-card">
-                    <span class="card_no">04</span>
-                    <div class="icon">🙋</div>
-                    <h3>Claim Item</h3>
-                    <p>Owners submit a request to claim their item.</p>
-                </div>
-
-                  <div class="arrow">→</div>
-
-                <div class="workflow-card">
-                    <span class="card_no">05</span>
-                    <div class="icon">✅</div>
-                    <h3>Verification</h3>
-                    <p> Admin verifies ownership and returns the item.</p>
-                </div>
+        <h2>How TraceBack Works?</h2>
+        <div class="workflow">
+            <div class="workflow-card">
+                <span class="card_no">01</span>
+                <div class="icon">📤</div>
+                <h3>Report Lost Item</h3>
+                <p>Students submit accurate details and photos of their lost belongings.</p>
             </div>
 
+            <div class="arrow">→</div>
+
+            <div class="workflow-card">
+                <span class="card_no">02</span>
+                <div class="icon">📦</div>
+                <h3>Report Found Item</h3>
+                <p>Finders report items found across campus with storage location.</p>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-card">
+                <span class="card_no">03</span>
+                <div class="icon">🔍</div>
+                <h3>Search & Match</h3>
+                <p>Intelligent matching connects lost belongings with found items.</p>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-card">
+                <span class="card_no">04</span>
+                <div class="icon">🙋</div>
+                <h3>Claim Item</h3>
+                <p>Original owners file a claim with non-sensitive proof of ownership.</p>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="workflow-card">
+                <span class="card_no">05</span>
+                <div class="icon">✅</div>
+                <h3>Admin Verification</h3>
+                <p>Campus Security verifies evidence and safely returns the item.</p>
+            </div>
+        </div>
     </section>
 
-    <!--footer-->
-
-    <section class="footer">
-            <div class="footer-head">
-            <h2>TraceBack</h2>
-            <p>Trace. Find. Reconnect.</p>
-            </div>
-            <div class="footer-tail">
-                <div class="quicklinks">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Search</a></li>
-                        <li><a href="#">Report Lost</a></li>
-                        <li><a href="#">Report Found</a></li>
-                        <li><a href="login.html">Login</a></li>
-                    </ul>
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <img src="fina.png" alt="TraceBack" style="width:36px; height:36px;">
+                    <h3>TraceBack</h3>
+                </div>
+                <p class="footer-tagline">Trace. Find. Reconnect.</p>
+                <p class="footer-desc">
+                    A centralized college lost & found management system built to reunite students, faculty, and campus staff with their missing belongings safely and transparently.
+                </p>
+                <div class="footer-contact-info">
+                    <span>📍 Campus Security Office • Room 101</span>
+                    <span>✉️ security@traceback.edu</span>
                 </div>
             </div>
 
-    </section>
-            
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="search.html">Browse All Items</a></li>
+                    <li><a href="#" class="auth-report-lost">Report Lost Item</a></li>
+                    <li><a href="#" class="auth-report-found">Report Found Item</a></li>
+                    <li><a href="dashboard.html">User Dashboard</a></li>
+                </ul>
+            </div>
 
-</header>
+            <div class="footer-col">
+                <h4>Campus Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="search.html?location=Library">Library Help Desk</a></li>
+                    <li><a href="search.html?location=IT">IT Block Lab 213</a></li>
+                    <li><a href="search.html?location=Security">Security Post Gate 1</a></li>
+                    <li><a href="myclaims.html">Claim Verification</a></li>
+                    <li><a href="register.html">Student Registration</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Security & Policy</h4>
+                <p class="footer-policy-text">
+                    🔒 <strong>Strict Privacy Protection:</strong> Finder contact details and ownership proof documents are kept strictly confidential until campus administrators verify ownership claims.
+                </p>
+                <div class="footer-badges">
+                    <span class="security-badge">✓ Email Verified</span>
+                    <span class="security-badge">✓ Admin Approved</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>© 2026 TraceBack - College Lost & Found Management System. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="home.html">Campus Security</a>
+                    <span>•</span>
+                    <a href="home.html">Student Welfare</a>
+                    <span>•</span>
+                    <a href="home.html">Privacy Guidelines</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Update navbar if user is authenticated
+            const currentUser = TraceBackAPI.getCurrentUser();
+            const navUl = document.querySelector('.navbar nav ul');
+            if (currentUser && navUl) {
+                const loginLi = navUl.querySelector('a[href="login.html"]')?.parentElement;
+                const signupLi = navUl.querySelector('a[href="register.html"]')?.parentElement;
+                if (loginLi) loginLi.remove();
+                if (signupLi) signupLi.remove();
+
+                const dashLi = document.createElement('li');
+                dashLi.innerHTML = `<a href="dashboard.html" style="font-weight:600; color:#0b1b45;">Dashboard (${currentUser.fname})</a>`;
+                navUl.appendChild(dashLi);
+
+                const logoutLi = document.createElement('li');
+                logoutLi.innerHTML = `<a href="#" id="homeNavLogout" style="background:#ef4444; color:white; padding:7px 16px; border-radius:20px; font-weight:600; text-decoration:none;">Logout</a>`;
+                navUl.appendChild(logoutLi);
+
+                document.getElementById('homeNavLogout')?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (confirm('Log out of TraceBack?')) {
+                        TraceBackAPI.logout();
+                    }
+                });
+            }
+
+            // Guard report links: User should only be able to report after logged in
+            document.querySelectorAll('.auth-report-lost').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!TraceBackAPI.getCurrentUser()) {
+                        window.location.href = 'login.html?redirect=reportlost.html&msg=' + encodeURIComponent('Please sign in or create an account before reporting a lost item.');
+                    } else {
+                        window.location.href = 'reportlost.html';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.auth-report-found').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!TraceBackAPI.getCurrentUser()) {
+                        window.location.href = 'login.html?redirect=reportfound.html&msg=' + encodeURIComponent('Please sign in or create an account before reporting a found item.');
+                    } else {
+                        window.location.href = 'reportfound.html';
+                    }
+                });
+            });
+
+            // Single search bar handler in navbar
+            const searchInput = document.getElementById('search');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && searchInput.value.trim()) {
+                        window.location.href = `search.html?q=${encodeURIComponent(searchInput.value.trim())}`;
+                    }
+                });
+            }
+
+            // Fetch dynamic recent items if available
+            try {
+                const res = await TraceBackAPI.getRecentItems();
+                const container = document.getElementById('recentItemsContainer');
+                if (res && res.items && res.items.length > 0) {
+                    if (container) {
+                        container.innerHTML = res.items.map(item => `
+                            <div class="item-card">
+                                <img src="${item.image_url || 'fina.png'}" class="product-image" alt="${item.item_name}" onerror="this.src='fina.png'">
+                                <div class="card-content">
+                                    <h3>${item.item_name}</h3>
+                                    <span>📍 ${item.location || 'Campus'}</span>
+                                    <span>📅 ${item.date || 'Recently'}</span>
+                                    <a href="details.html?type=${(item.type || 'found').toLowerCase()}&id=${item.id}" class="view-btn" style="text-decoration:none; display:inline-block; text-align:center;">View Details</a>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                } else if (container) {
+                    container.innerHTML = `
+                        <div style="text-align:center; padding:45px 20px; width:100%; color:#64748b;">
+                            <div style="font-size:36px; margin-bottom:10px;">📦</div>
+                            <h4 style="color:#0b1b45; font-size:18px; margin-bottom:6px;">No Found Items Reported Yet</h4>
+                            <p style="margin:0; font-size:14px;">When items found across campus are submitted, they will appear here automatically.</p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.log('Error fetching recent items:', err);
+            }
+        });
+    </script>
 </body>
 </html>

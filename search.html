@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceBack - Search & Browse Items</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="logo">
+            <img src="fina.png" alt="Logo">
+            <h2>TraceBack</h2>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </header>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="fina.png" alt="TraceBack Logo">
+                <h2>TraceBack</h2>
+            </div>
+            <ul>
+                <li><a href="dashboard.html">🏠 Dashboard</a></li>
+                <li><a href="reportlost.html">📤 Report Lost</a></li>
+                <li><a href="reportfound.html">📦 Report Found</a></li>
+                <li class="active"><a href="search.html">🔍 Search Items</a></li>
+                <li><a href="myreports.html">📋 My Reports</a></li>
+                <li><a href="myclaims.html">🙋 My Claims</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="settings.html">⚙ Settings</a></li>
+                <li><a href="login.html" id="logoutLink">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-card-full">
+                <div class="page-header">
+                    <div>
+                        <h1>Search & Browse Items</h1>
+                        <p>Search active lost and found reports across campus</p>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <a href="#" id="searchReportLostBtn" class="btn-primary" style="background:#ef4444; text-decoration:none;">+ Report Lost</a>
+                        <a href="#" id="searchReportFoundBtn" class="btn-primary" style="background:#10b981; text-decoration:none;">+ Report Found</a>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="filter-bar">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search by item name, description, brand, or keywords...">
+                    </div>
+
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types (Lost & Found)</option>
+                        <option value="found">Found Items</option>
+                        <option value="lost">Lost Items</option>
+                    </select>
+
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Documents">Documents</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Wallets">Wallets</option>
+                        <option value="Keys">Keys</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Books">Books</option>
+                        <option value="ID Cards">ID Cards</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <button class="filter-btn-clear" id="clearFiltersBtn">Clear Filters</button>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <span id="resultsCount" style="color:#64748b; font-size:14px; font-weight:600;">Showing 0 items</span>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="items-grid" id="itemsGrid">
+                    <!-- Populated via API -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display:none;">
+                    <div class="empty-state-icon">🔍</div>
+                    <h3>No matching items found</h3>
+                    <p>Try searching with different keywords, clear your category filters, or submit a new report.</p>
+                    <a href="#" id="emptyReportLostBtn" class="btn-primary" style="display:inline-block; max-width:200px; margin:0 auto; text-decoration:none;">Report It Lost</a>
+                </div>
+
+                <!-- Footer -->
+                <footer class="content-footer">
+                    <p>© 2026 TraceBack • College Lost & Found System • Campus Security & Student Affairs</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const typeFilter = document.getElementById('typeFilter');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const clearBtn = document.getElementById('clearFiltersBtn');
+            const grid = document.getElementById('itemsGrid');
+            const countLabel = document.getElementById('resultsCount');
+            const emptyState = document.getElementById('emptyState');
+
+            // Read query params from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('q')) searchInput.value = urlParams.get('q');
+            if (urlParams.get('type')) typeFilter.value = urlParams.get('type');
+            if (urlParams.get('category')) categoryFilter.value = urlParams.get('category');
+
+            async function performSearch() {
+                grid.innerHTML = '<div style="padding:40px; text-align:center; color:#64748b; grid-column:1/-1;">Searching database...</div>';
+                emptyState.style.display = 'none';
+
+                const params = {
+                    q: searchInput.value.trim(),
+                    type: typeFilter.value,
+                    category: categoryFilter.value
+                };
+
+                try {
+                    const res = await TraceBackAPI.searchItems(params);
+                    const items = res.results || [];
+
+                    countLabel.textContent = `Showing ${items.length} item${items.length === 1 ? '' : 's'}`;
+
+                    if (items.length === 0) {
+                        grid.innerHTML = '';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    grid.innerHTML = items.map(item => {
+                        const isFound = item.type === 'Found';
+                        const badgeClass = isFound ? 'badge-found' : 'badge-lost';
+                        const detailType = isFound ? 'found' : 'lost';
+
+                        return `
+                            <div class="item-box">
+                                <div class="item-box-img-wrap">
+                                    <img src="${item.image_url || (isFound ? 'bottle.png' : 'fina.png')}" alt="${escapeHtml(item.item_name)}" onerror="this.src='fina.png'">
+                                    <div class="item-box-badge">
+                                        <span class="badge ${badgeClass}">${item.type}</span>
+                                    </div>
+                                </div>
+                                <div class="item-box-body">
+                                    <h3 class="item-box-title">${escapeHtml(item.item_name)}</h3>
+                                    <p class="item-box-desc">${escapeHtml(item.description || 'No description provided.')}</p>
+                                    
+                                    <div class="item-box-meta">
+                                        <span>🏷️ <strong>Category:</strong> ${escapeHtml(item.category)}</span>
+                                        <span>📍 <strong>Location:</strong> ${escapeHtml(item.location || 'Campus')}</span>
+                                        <span>📅 <strong>Date:</strong> ${escapeHtml(item.date || 'Recent')}</span>
+                                    </div>
+
+                                    <div class="item-box-actions">
+                                        <a href="details.html?type=${detailType}&id=${item.id}" class="btn-primary">View Details</a>
+                                        ${isFound && item.status === 'Available' ? `
+                                            <a href="claim.html?found_id=${item.id}" class="btn-secondary" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">Claim</a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                } catch (err) {
+                    console.error('Search failed:', err);
+                    grid.innerHTML = `<div style="padding:40px; text-align:center; color:#dc2626; grid-column:1/-1;">Error loading items: ${escapeHtml(err.message)}</div>`;
+                }
+            }
+
+            // Event Listeners
+            let debounceTimer;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(performSearch, 300);
+            });
+
+            typeFilter.addEventListener('change', performSearch);
+            categoryFilter.addEventListener('change', performSearch);
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                typeFilter.value = 'all';
+                categoryFilter.value = 'all';
+                performSearch();
+            });
+
+            // Auth guards for reporting
+            function guardReportNavigation(targetUrl, msg) {
+                if (!TraceBackAPI.getCurrentUser()) {
+                    window.location.href = `login.html?redirect=${encodeURIComponent(targetUrl)}&msg=${encodeURIComponent(msg)}`;
+                } else {
+                    window.location.href = targetUrl;
+                }
+            }
+
+            document.getElementById('searchReportLostBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                guardReportNavigation('reportlost.html', 'Please sign in or create an account before reporting a lost item.');
+            });
+
+            document.getElementById('emptyReportLostBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                guardReportNavigation('reportlost.html', 'Please sign in or create an account before reporting a lost item.');
+            });
+
+            document.getElementById('searchReportFoundBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                guardReportNavigation('reportfound.html', 'Please sign in or create an account before reporting a found item.');
+            });
+
+            // Initial search
+            performSearch();
+        });
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

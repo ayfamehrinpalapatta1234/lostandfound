@@ -406,33 +406,179 @@ body{
 
 }
 
-.footer{
-    margin-bottom: 35px;
-    background-color: whitesmoke;
+/* =====================================================================
+   TraceBack Modern SaaS Footer
+   ===================================================================== */
+.site-footer {
+    background-color: #0b1b45;
+    color: #cbd5e1;
+    padding-top: 60px;
+    margin-top: 70px;
+    font-family: inherit;
+    border-top: 4px solid #1e3a8a;
 }
-.footer-head h2{
-    text-align: center;
-    font-size: 32px;
-    color:wheat;
-    align-items:center;
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px 45px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
 }
-.footer-head p{
-    font-size:20px;
-    text-align: center;
-    color:grey;
+
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 8px;
 }
-.footer-tail{
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background: #3b82f6;
+    border-radius: 2px;
+}
+
+.footer-brand {
     display: flex;
-    gap:25px;
-    padding: 50px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
 }
-.quicklinks h2{
-    font-size:20px;
+
+.footer-brand h3 {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
 }
-.quicklinks ul{
+
+.footer-tagline {
+    color: #93c5fd;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 12px;
+}
+
+.footer-desc {
+    color: #94a3b8;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+.footer-links {
     list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
 }
-.quicklinks ul li a{
-        text-decoration:none;
-        color:black;
+
+.footer-links li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
 }
+
+.footer-links li a:hover {
+    color: #60a5fa;
+    transform: translateX(4px);
+}
+
+.footer-policy-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin-bottom: 15px;
+}
+
+.footer-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.security-badge {
+    background: rgba(37, 99, 235, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #071230;
+    padding: 20px 25px;
+}
+
+.footer-bottom-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.footer-bottom-inner p {
+    margin: 0;
+}
+
+.footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-bottom-links a {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+.footer-bottom-links a:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .footer-bottom-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
